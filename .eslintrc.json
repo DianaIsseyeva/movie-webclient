@@ -1,3 +1,114 @@
 {
-  "extends": "next/core-web-vitals"
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["next/core-web-vitals", "airbnb"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "react-hooks", "import", "jsx-a11y", "react", "@typescript-eslint", "prettier"],
+  "rules": {
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "semi": "off",
+    "@typescript-eslint/semi": "error",
+    "react/require-default-props": "off",
+    "no-restricted-exports": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-one-expression-per-line": 0,
+    "implicit-arrow-linebreak": 0,
+    "no-undef": ["error"],
+    "react/sort-comp": ["off"],
+    "react/prefer-stateless-function": ["off"],
+    "react/destructuring-assignment": 1,
+    "function-paren-newline": 0,
+    "spaced-comment": 0,
+    "react/prop-types": 0,
+    "no-extra-boolean-cast": 0,
+    "quote-props": 0,
+    "object-curly-spacing": ["error", "always"],
+    "no-nested-ternary": 0,
+    "react/jsx-wrap-multilines": 0,
+    "object-curly-newline": 0,
+    "react/jsx-curly-newline": ["off"],
+    "operator-linebreak": 0,
+    "no-unused-expressions": 0,
+    "global-require": 0,
+    "import/no-cycle": 0,
+    "no-underscore-dangle": 0,
+    "no-return-assign": 0,
+    "quotes": "off",
+    "arrow-parens": 0,
+    "no-shadow": "off",
+    "eol-last": 0,
+    "react-native/no-unused-styles": 0,
+    "react-native/split-platform-components": 0,
+    "react-native/no-inline-styles": 0,
+    "react-native/no-color-literals": 0,
+    "react-native/no-raw-text": 0,
+    "consistent-return": 0,
+    "react/react-in-jsx-scope": "off",
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "linebreak-style": "off",
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "camelcase": "warn",
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".tsx", ".ts"]
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "off",
+      {
+        "devDependencies": true,
+        "optionalDependencies": false,
+        "peerDependencies": true,
+        "bundledDependencies": false
+      }
+    ],
+    "react/function-component-definition": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "import/prefer-default-export": "off",
+    "react/no-array-index-key": "off",
+    "no-plusplus": "off",
+    "no-tabs": 0,
+    "no-console": "off",
+    "max-len": "off",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "dot-notation": "off",
+    "react/button-has-type": "off",
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        "labelComponents": ["label"],
+        "controlComponents": ["Checkbox"],
+        "depth": 3
+      }
+    ],
+    "react/jsx-props-no-spreading": "off",
+    "no-param-reassign": 0
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  }
 }
