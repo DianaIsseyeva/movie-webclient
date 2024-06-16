@@ -1,7 +1,11 @@
+import Movies from '@/components/movies/Movies';
+
 export default function Home() {
   return (
-    <main className='flex min-h-screen flex-col items-center justify-between p-24'>
-      <div>movie</div>
+    <main className='container mx-auto mt-20'>
+      <div>
+        <Movies />
+      </div>
     </main>
   );
 }
