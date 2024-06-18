@@ -1,22 +1,35 @@
 'use client';
 
+import { MovieController } from '@/api/controllers/movies';
 import { MoviesType, MovieType } from '@/common/types';
 import { Backdrop, CircularProgress, Pagination } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Filter from '../filter/Filter';
 import MovieItem from '../movie-item/MovieItem';
-import { MovieController } from '@/api/controllers/movies';
 
 export default function Movies() {
   const [movies, setMovies] = useState<MoviesType>();
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  const [selectedRatingType, setSelectedRatingType] = useState<string>('');
+  const [minRating, setMinRating] = useState<string>('0');
+  const [maxRating, setMaxRating] = useState<string>('10');
+  const [minYear, setMinYear] = useState<string>('1990');
+  const [maxYear, setMaxYear] = useState<string>(new Date().getFullYear().toString());
 
   const fetchMovies = async () => {
     setIsLoading(true);
     try {
-      const response = await MovieController.getAllMovies(currentPage, selectedGenres);
+      const response = await MovieController.getAllMovies(
+        currentPage,
+        selectedGenres,
+        selectedRatingType,
+        minRating,
+        maxRating,
+        minYear,
+        maxYear
+      );
       if (response) {
         const filteredMovies = response.docs.filter((movie: MovieType) => movie.name !== null);
         setMovies({ ...response, docs: filteredMovies });
@@ -30,14 +43,39 @@ export default function Movies() {
 
   useEffect(() => {
     fetchMovies();
-  }, [currentPage, selectedGenres]);
-
-  const pageNumberHandler = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
+  }, [currentPage]);
 
   const handleFilterChange = (genres: string[]) => {
     setSelectedGenres(genres);
+  };
+
+  const handleRatingTypeChange = (ratingType: string) => {
+    setSelectedRatingType(ratingType);
+  };
+
+  const handleRatingChange = (min: string, max: string) => {
+    setMinRating(min);
+    setMaxRating(max);
+  };
+
+  const handleYearChange = (min: string, max: string) => {
+    setMinYear(min);
+    setMaxYear(max);
+  };
+
+  const handleApplyFilters = () => {
+    fetchMovies();
+  };
+
+  const handleClearFilters = () => {
+    setSelectedGenres([]);
+    setSelectedRatingType('');
+    setMinRating('0');
+    setMaxRating('10');
+    setMinYear('1990');
+    setMaxYear(new Date().getFullYear().toString());
+    setCurrentPage(1);
+    fetchMovies();
   };
 
   if (isLoading) {
@@ -48,17 +86,26 @@ export default function Movies() {
     );
   }
 
-  const filteredMovies = selectedGenres.length
-    ? movies?.docs.filter((movie: MovieType) => movie.genres?.some(genre => selectedGenres.includes(genre.name)))
-    : movies?.docs;
-
   return (
     <div>
-      <Filter selectedGenres={selectedGenres} onFilterChange={handleFilterChange} />
+      <Filter
+        selectedGenres={selectedGenres}
+        onFilterChange={handleFilterChange}
+        selectedRatingType={selectedRatingType}
+        onRatingTypeChange={handleRatingTypeChange}
+        minRating={minRating}
+        maxRating={maxRating}
+        onRatingChange={handleRatingChange}
+        minYear={minYear}
+        maxYear={maxYear}
+        onYearChange={handleYearChange}
+        onApplyFilters={handleApplyFilters}
+        onClearFilters={handleClearFilters}
+      />
       {movies && (
         <div>
           <div className='justify-items-center grid grid-cols-4 tablet:grid-cols-3 mobile:grid-cols-1 gap-10'>
-            {filteredMovies?.map(movie => (
+            {movies.docs.map(movie => (
               <div key={movie.id} className='p-3 bg-slate-400 rounded-lg h-full flex flex-col justify-between'>
                 <MovieItem
                   name={movie.name}
@@ -70,11 +117,7 @@ export default function Movies() {
               </div>
             ))}
           </div>
-          <Pagination
-            onChange={(_, page) => pageNumberHandler(page)}
-            count={10}
-            className='my-10 flex justify-center'
-          />
+          <Pagination onChange={(_, page) => setCurrentPage(page)} count={10} className='my-10 flex justify-center' />
         </div>
       )}
     </div>
