@@ -2,10 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 export default function Header() {
-  const pathname = usePathname();
   return (
     <div
       className='mobile:fixed top-0 right-0 left-0 mobile:w-full z-50'

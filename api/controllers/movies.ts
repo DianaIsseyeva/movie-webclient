@@ -12,14 +12,16 @@ export class MovieController extends BaseController {
     minRating: string,
     maxRating: string,
     minYear: string,
-    maxYear: string
+    maxYear: string,
+    ids?: number[]
   ) {
     const genresQuery = genres.map(genre => `genres.name=${encodeURIComponent(genre)}`).join('&');
     const ratingQuery = ratingType ? `&rating.${ratingType}=${minRating}-${maxRating}` : '';
     const yearQuery = `&year=${minYear}-${maxYear}`;
+    const idsQuery = ids && ids.length > 0 ? `&id=${ids.join(',')}` : '';
     const url = `${KINOPOISK_ENDPOINT}/v1.4/movie?page=${pageNumber}&limit=50${
       genresQuery ? `&${genresQuery}` : ''
-    }${ratingQuery}${yearQuery}`;
+    }${ratingQuery}${yearQuery}${idsQuery}`;
 
     return this.get<MoviesType>(url);
   }
