@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Movie Web Client
 
-## Getting Started
+Простое веб-приложение для просмотра информации о фильмах с использованием Next.js, TypeScript и API Кинопоиск (https://kinopoisk.dev/).
 
-First, run the development server:
+## Функционал
+
+### 1. Отображение списка фильмов
+
+- Приложение отображает список фильмов, получаемых с помощью API.
+- Фильмы отображаются постранично по 50 фильмов на страницу.
+- Для каждого фильма отображается:
+  - Постер фильма (если доступен).
+  - Название фильма.
+  - Год выпуска.
+  - Рейтинг фильма.
+
+### 2. Фильтрация списка фильмов
+
+- Возможность фильтрации списка фильмов по следующим параметрам:
+  - По жанру (выбор нескольких жанров).
+  - По рейтингу (диапазон рейтинга).
+  - По году выпуска (диапазон лет, начиная с 1990).
+
+### 3. Просмотр детальной информации о фильме
+
+- При клике на фильм из списка приложение переходит на страницу с детальной информацией об этом фильме.
+- На странице фильма отображается:
+  - Постер фильма (если доступен).
+  - Название фильма.
+  - Описание фильма.
+  - Рейтинг фильма.
+  - Дата выхода.
+  - Список жанров.
+
+### 4. Добавление фильмов в избранное
+
+- Возможность добавления фильмов в список "избранное".
+- Отдельная страница со списком избранных фильмов.
+- Сохранение списка при перезагрузке страницы.
+
+## При разработке были использованы следующие технологии
+
+- Next.js, TypeScript.
+- хуки и функциональные компоненты React.
+- Axios для работы с HTTP-запросами
+- Material UI для компонентов пользовательского интерфейса.
+
+## Установка и запуск
+
+### Клонирование репозитория
+
+```bash
+git clone https://github.com/your-repository/movie-webclient.git
+cd movie-webclient
+```
+
+### Установка зависимостей
+
+```bash
+npm install
+```
+
+### Запуск приложения
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Переменные окружения
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Создайте файл .env.local в корне проекта, скопировав содержимое из .env.default.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Структура проекта
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+app/ - Страницы Next.js.
+components/ - Компоненты React.
+api/ - API-контроллеры для взаимодействия с внешними API.
+common/ - Общие типы.
