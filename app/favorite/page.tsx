@@ -7,8 +7,14 @@ import { Pagination } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 export default function Favorite() {
-  const [favoriteMoviesIds, setFavoriteMoviesIds] = useState([]);
-  const [favoriteMovies, setFavoriteMovies] = useState<MoviesType>();
+  const [favoriteMoviesIds, setFavoriteMoviesIds] = useState<number[]>([]);
+  const [favoriteMovies, setFavoriteMovies] = useState<MoviesType>({
+    docs: [],
+    total: 0,
+    limit: 50,
+    page: 1,
+    pages: 1,
+  });
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -22,24 +28,31 @@ export default function Favorite() {
   useEffect(() => {
     const fetchFavoriteMovies = async () => {
       try {
-        const response = await MovieController.getAllMovies(1, [], '', '', '', '', '', favoriteMoviesIds);
+        const response = await MovieController.getAllMovies(1, [], '', '', '', '', '');
         if (response) {
-          setFavoriteMovies(response);
+          const filteredMovies = response.docs.filter(movie => favoriteMoviesIds.includes(movie.id)) || [];
+          setFavoriteMovies({
+            docs: filteredMovies,
+            total: filteredMovies.length,
+            limit: 50,
+            page: 1,
+            pages: 1,
+          });
         }
       } catch (error) {
-        console.error('Error fetching favorite movies:', error);
+        console.error('Error fetching movies:', error);
       }
     };
 
     fetchFavoriteMovies();
-  }, [favoriteMovies]);
+  }, []);
 
   return (
     <div>
       {favoriteMovies && (
         <div>
           <div className='justify-items-center grid grid-cols-4 tablet:grid-cols-3 mobile:grid-cols-1 gap-10'>
-            {favoriteMovies.docs.map(movie => (
+            {favoriteMovies.docs?.map(movie => (
               <div key={movie.id} className='p-3 bg-slate-400 rounded-lg h-full flex flex-col justify-between'>
                 <MovieItem
                   name={movie.name}
