@@ -8,13 +8,11 @@ export type MovieType = {
   name: string;
   alternativeName: string;
   enName: string;
-  names: [
-    {
-      name: string;
-      language: string;
-      type: string;
-    }
-  ];
+  names: {
+    name: string;
+    language: string;
+    type: string;
+  }[];
   type: string;
   typeNumber: number;
   year: number;
@@ -22,13 +20,11 @@ export type MovieType = {
   shortDescription: string;
   slogan: string;
   status: string;
-  facts: [
-    {
-      value: string;
-      type: string;
-      spoiler: boolean;
-    }
-  ];
+  facts: {
+    value: string;
+    type: string;
+    spoiler: boolean;
+  }[];
   rating: {
     kp: number;
     imdb: number;
@@ -60,48 +56,38 @@ export type MovieType = {
     previewUrl: string;
   };
   videos: {
-    trailers: [
-      {
-        url: string;
-        name: string;
-        site: string;
-        size: number;
-        type: string;
-      }
-    ];
+    trailers: {
+      url: string;
+      name: string;
+      site: string;
+      size: number;
+      type: string;
+    }[];
   };
-  genres: [
-    {
-      name: string;
-    }
-  ];
-  countries: [
-    {
-      name: string;
-    }
-  ];
-  persons: [
-    {
-      id: number;
-      photo: string;
-      name: string;
-      enName: string;
-      description: string;
-      profession: string;
-      enProfession: string;
-    }
-  ];
+  genres: {
+    name: string;
+  }[];
+  countries: {
+    name: string;
+  }[];
+  persons: {
+    id: number;
+    photo: string;
+    name: string;
+    enName: string;
+    description: string;
+    profession: string;
+    enProfession: string;
+  }[];
   reviewInfo: {
     count: number;
     positiveCount: number;
     percentage: string;
   };
-  seasonsInfo: [
-    {
-      number: number;
-      episodesCount: number;
-    }
-  ];
+  seasonsInfo: {
+    number: number;
+    episodesCount: number;
+  }[];
   budget: {
     value: number;
     currency: string;
@@ -129,89 +115,77 @@ export type MovieType = {
     bluray: string;
     dvd: string;
   };
-  similarMovies: [
-    {
-      id: number;
-      name: string;
-      enName: string;
-      alternativeName: string;
-      type: string;
-      poster: {
-        url: string;
-        previewUrl: string;
-      };
-      rating: {
-        kp: number;
-        imdb: number;
-        tmdb: number;
-        filmCritics: number;
-        russianFilmCritics: number;
-        await: number;
-      };
-      year: number;
-    }
-  ];
-  sequelsAndPrequels: [
-    {
-      id: number;
-      name: string;
-      enName: string;
-      alternativeName: string;
-      type: string;
-      poster: {
-        url: string;
-        previewUrl: string;
-      };
-      rating: {
-        kp: number;
-        imdb: number;
-        tmdb: number;
-        filmCritics: number;
-        russianFilmCritics: number;
-        await: number;
-      };
-      year: number;
-    }
-  ];
+  similarMovies: {
+    id: number;
+    name: string;
+    enName: string;
+    alternativeName: string;
+    type: string;
+    poster: {
+      url: string;
+      previewUrl: string;
+    };
+    rating: {
+      kp: number;
+      imdb: number;
+      tmdb: number;
+      filmCritics: number;
+      russianFilmCritics: number;
+      await: number;
+    };
+    year: number;
+  }[];
+  sequelsAndPrequels: {
+    id: number;
+    name: string;
+    enName: string;
+    alternativeName: string;
+    type: string;
+    poster: {
+      url: string;
+      previewUrl: string;
+    };
+    rating: {
+      kp: number;
+      imdb: number;
+      tmdb: number;
+      filmCritics: number;
+      russianFilmCritics: number;
+      await: number;
+    };
+    year: number;
+  }[];
   watchability: {
-    items: [
-      {
-        name: string;
-        logo: {
-          url: string;
-        };
+    items: {
+      name: string;
+      logo: {
         url: string;
-      }
-    ];
+      };
+      url: string;
+    }[];
   };
-  releaseYears: [
-    {
-      start: number;
-      end: number;
-    }
-  ];
+  releaseYears: {
+    start: number;
+    end: number;
+  }[];
   top10: number;
   top250: number;
   ticketsOnSale: boolean;
   totalSeriesLength: number;
   seriesLength: number;
   isSeries: boolean;
-  audience: [
-    {
-      count: number;
-      country: string;
-    }
-  ];
+  audience: {
+    count: number;
+    country: string;
+  }[];
   lists: string[];
   networks: {
-    items: [
-      {
-        name: string;
-        logo: {
-          url: string;
-        };
-      }
-    ];
+    items: {
+      name: string;
+      logo: {
+        url: string;
+      };
+    }[];
   };
   updatedAt: string;
   createdAt: string;

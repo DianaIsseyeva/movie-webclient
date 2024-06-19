@@ -3,7 +3,7 @@
 import { MovieController } from '@/api/controllers/movies';
 import { MoviesType, MovieType } from '@/common/types';
 import { Backdrop, CircularProgress, Pagination } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Filter from '../filter/Filter';
 import MovieItem from '../movie-item/MovieItem';
 
@@ -17,6 +17,29 @@ export default function Movies() {
   const [maxRating, setMaxRating] = useState<string>('10');
   const [minYear, setMinYear] = useState<string>('1990');
   const [maxYear, setMaxYear] = useState<string>(new Date().getFullYear().toString());
+  const [favoriteMoviesIds, setFavoriteMoviesIds] = useState<number[]>([]);
+
+  const handleToggleFavorite = useCallback((id: number) => {
+    const favorites = localStorage.getItem('favorites');
+    let updatedFavorites = favorites ? JSON.parse(favorites) : [];
+
+    if (updatedFavorites.includes(id)) {
+      updatedFavorites = updatedFavorites.filter((favId: number) => favId !== id);
+    } else {
+      updatedFavorites.push(id);
+    }
+
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    setFavoriteMoviesIds(updatedFavorites);
+  }, []);
+
+  useEffect(() => {
+    const favorites = localStorage.getItem('favorites');
+    if (favorites) {
+      const parsedFavorites = JSON.parse(favorites);
+      setFavoriteMoviesIds(parsedFavorites);
+    }
+  }, [handleToggleFavorite]);
 
   const fetchMovies = async () => {
     setIsLoading(true);
@@ -30,7 +53,7 @@ export default function Movies() {
         minYear,
         maxYear
       );
-      if (response) {
+      if (response.docs) {
         const filteredMovies = response.docs.filter((movie: MovieType) => movie.name !== null);
         setMovies({ ...response, docs: filteredMovies });
       }
@@ -113,6 +136,8 @@ export default function Movies() {
                   poster={movie.poster}
                   year={movie.year}
                   rating={movie.rating}
+                  onFavoriteToggle={handleToggleFavorite}
+                  isFavorite={favoriteMoviesIds.includes(movie.id)}
                 />
               </div>
             ))}

@@ -1,35 +1,25 @@
 import { MovieType } from '@/common/types';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
+import Image from 'next/image';
+import Link from 'next/link';
 
-export default function MovieItem({ id, poster, name, year, rating, description, genres }: Partial<MovieType>) {
-  const [isFavorite, setIsFavorite] = useState(false);
+type MovieItemProps = Partial<MovieType> & {
+  onFavoriteToggle: (id: number) => void;
+  isFavorite: boolean;
+};
 
-  useEffect(() => {
-    const favorites = localStorage.getItem('favorites');
-    if (favorites) {
-      const parsedFavorites = JSON.parse(favorites);
-      setIsFavorite(parsedFavorites.includes(id));
-    }
-  }, []);
-
-  const handleToggleFavorite = () => {
-    const favorites = localStorage.getItem('favorites');
-    let updatedFavorites = favorites ? JSON.parse(favorites) : [];
-
-    if (isFavorite) {
-      updatedFavorites = updatedFavorites.filter((favId: number) => favId !== id);
-    } else {
-      updatedFavorites.push(id);
-    }
-
-    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-    setIsFavorite(!isFavorite);
-  };
-
+export default function MovieItem({
+  id,
+  poster,
+  name,
+  year,
+  rating,
+  description,
+  genres,
+  onFavoriteToggle,
+  isFavorite,
+}: MovieItemProps) {
   return (
     <div className='flex flex-col items-start justify-between'>
       <div className='relative max-w-full min-w-[240px] mobile:min-w-[300px] tablet:min-w-[240px] h-[320px]'>
@@ -47,7 +37,13 @@ export default function MovieItem({ id, poster, name, year, rating, description,
           <Link href={`/movie/${id}`}>
             <p className='text-lg font-semibold'>{name}</p>
           </Link>
-          <IconButton className='' aria-label='add to favorites' onClick={handleToggleFavorite}>
+          <IconButton
+            className=''
+            aria-label='add to favorites'
+            onClick={() => {
+              id && onFavoriteToggle(id);
+            }}
+          >
             <FavoriteIcon color={isFavorite ? 'error' : 'inherit'} />
           </IconButton>
         </div>
