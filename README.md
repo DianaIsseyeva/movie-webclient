@@ -51,7 +51,7 @@
 ### Клонирование репозитория
 
 ```bash
-git clone https://github.com/your-repository/movie-webclient.git
+git clone https://github.com/DianaIsseyeva/movie-webclient.git
 cd movie-webclient
 ```
 
