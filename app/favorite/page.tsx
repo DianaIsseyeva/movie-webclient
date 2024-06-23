@@ -1,6 +1,7 @@
 'use client';
 
 import { MovieController } from '@/api/controllers/movies';
+import { toggleFavorite } from '@/common/helper/toggle-favorite';
 import { MoviesType } from '@/common/types';
 import MovieItem from '@/components/movie-item/MovieItem';
 import { Pagination } from '@mui/material';
@@ -29,16 +30,7 @@ export default function Favorite() {
   }, [favoriteMoviesIds]);
 
   const handleToggleFavorite = useCallback((id: number) => {
-    const favorites = localStorage.getItem('favorites');
-    let updatedFavorites = favorites ? JSON.parse(favorites) : [];
-
-    if (updatedFavorites.includes(id)) {
-      updatedFavorites = updatedFavorites.filter((favId: number) => favId !== id);
-    } else {
-      updatedFavorites.push(id);
-    }
-
-    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    const updatedFavorites = toggleFavorite(id);
     setFavoriteMoviesIds(updatedFavorites);
   }, []);
 
